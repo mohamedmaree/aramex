@@ -1,0 +1,26 @@
+{
+    "name": "maree/aramex",
+    "description": "package to integrate with Aramex API's",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "mohamed maree",
+            "email": "m7mdmaree26@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "maree\\aramex\\" : "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "maree\\aramex\\AramexServiceProvider"
+            ]
+        }
+    }        
+}
