@@ -53,18 +53,18 @@ class Core
                 'Reference3'            => '', // extra param for response
                 'Reference4'            => '', // extra param for response
             ],
-            'LabelInfo'     => config('aramex.LabelInfo'),
+            'LabelInfo'             => config('aramex.LabelInfo'),
         ];
 
 
-        $this->env = config('aramex.ENV');
-        $this->accNum = config("aramex.".$this->env)['AccountNumber'];
-        $this->accEnt = config("aramex.".$this->env)['AccountEntity'];
-        $this->accCntryCd = config("aramex.".$this->env)['AccountCountryCode'];
-        $this->accPin = config("aramex.".$this->env)['AccountPin'];
-        $this->usrNm = config("aramex.".$this->env)['UserName'];
-        $this->psrd = config("aramex.".$this->env)['Password'];
-        $this->ver = config("aramex.".$this->env)['Version'];
+        $this->env                 = config('aramex.ENV');
+        $this->accNum              = config("aramex.".$this->env)['AccountNumber'];
+        $this->accEnt              = config("aramex.".$this->env)['AccountEntity'];
+        $this->accCntryCd          = config("aramex.".$this->env)['AccountCountryCode'];
+        $this->accPin              = config("aramex.".$this->env)['AccountPin'];
+        $this->usrNm               = config("aramex.".$this->env)['UserName'];
+        $this->psrd                = config("aramex.".$this->env)['Password'];
+        $this->ver                 = config("aramex.".$this->env)['Version'];
         $this->param['ClientInfo'] = config("aramex.".$this->env);
         
     }
@@ -225,15 +225,16 @@ class Core
     public function initializePickup($pickupDetails, $pickupAddress){
 
         $this->param['Pickup'] = [  
-            'Reference1'=> $pickupDetails->Reference1,
-            'Reference2'=> $pickupDetails->Reference1,
-            'PickupLocation' =>$pickupDetails->PickupLocation,
-            'Status' => $pickupDetails->Status, 
-            'PickupDate' => $pickupDetails->PickupDate,
-            'ReadyTime' => $pickupDetails->ReadyTime,
+            'Reference1'     => $pickupDetails->Reference1,
+            'Reference2'     => $pickupDetails->Reference1,
+            'PickupLocation' => $pickupDetails->PickupLocation,
+            'Status'         => $pickupDetails->Status, 
+            'PickupDate'     => $pickupDetails->PickupDate,
+            'ReadyTime'      => $pickupDetails->ReadyTime,
             'LastPickupTime' => $pickupDetails->LastPickupTime, // +26 hours
-            'ClosingTime' => $pickupDetails->ClosingTime, //+28 hours
-            'PickupContact' => [
+            'ClosingTime'    => $pickupDetails->ClosingTime, //+28 hours
+           
+            'PickupContact'  => [
                 'PersonName'    => $pickupAddress->PersonName, // should be static 'SomeName',
                 'CompanyName'   => config('aramex.CompanyName'), // config file
                 'PhoneNumber1'  => $pickupAddress->PhoneNumber1, // should be static '0777777',
@@ -241,27 +242,29 @@ class Core
                 'EmailAddress'  => $pickupAddress->EmailAddress // should be static 'email@somedomain.com'
             ],
             'PickupAddress' => [
-                'Line1' => $pickupAddress->Line1, // should be static 'Line1 Address',
-                'Line2' => $pickupAddress->Line2, // should be static 'Line2 Address',
-                'Line3' => $pickupAddress->Line3, // should be static 'Line3 Address',
+                'Line1'       => $pickupAddress->Line1, // should be static 'Line1 Address',
+                'Line2'       => $pickupAddress->Line2, // should be static 'Line2 Address',
+                'Line3'       => $pickupAddress->Line3, // should be static 'Line3 Address',
                 'CountryCode' => $pickupAddress->CountryCode, // should be static 'AE',
-                'City' => $pickupAddress->City, // should be static 'Dubai'
-                'PostCode' => $pickupAddress->ZipCode
+                'City'        => $pickupAddress->City, // should be static 'Dubai'
+                'PostCode'    => $pickupAddress->ZipCode
             ],
+
             'PickupItems' => [
                 'PickupItemDetail' => [
-                    'ProductGroup' => $pickupDetails->ProductGroup,
-                    'Payment' => $pickupDetails->Payment,
-                    'ProductType' => $pickupDetails->ProductType,
+                    'ProductGroup'   => $pickupDetails->ProductGroup,
+                    'Payment'        => $pickupDetails->Payment,
+                    'ProductType'    => $pickupDetails->ProductType,
                     'NumberOfPieces' => '1',
+                    
                     'ShipmentWeight' => [
                         'Value' => $pickupDetails->Weight,
-                        'Unit' => 'Kg'
+                        'Unit'  => 'Kg'
                     ],
                     'NumberOfShipments' => 1,
                     'ShipmentVolume'=> [
-                        'Value'=> $pickupDetails->Volume,
-                        'Unit'=>'Cm3'
+                        'Value' => $pickupDetails->Volume,
+                        'Unit'  => 'Cm3'
                     ]
                 ]
             ]
@@ -271,17 +274,14 @@ class Core
     public function initializePickupCancelation($guid , $comment)
     {
         $this->param['PickupGUID'] = $guid;
-        $this->param['Comments'] = $comment;
+        $this->param['Comments']   = $comment;
     }
 
     public function initializeCalculateRate($originAddress,$destinationAddress , $shipmentDetails, $currencyCode){
 
-        $this->param['OriginAddress'] = $originAddress;
-
-        $this->param['DestinationAddress'] = $destinationAddress;
-
-        $this->param['ShipmentDetails'] = $shipmentDetails;
-
+        $this->param['OriginAddress']         = $originAddress;
+        $this->param['DestinationAddress']    = $destinationAddress;
+        $this->param['ShipmentDetails']       = $shipmentDetails;
         $this->param["PreferredCurrencyCode"] = $currencyCode;
     }
 

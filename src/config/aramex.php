@@ -1,15 +1,9 @@
 <?php
 
-/**
- * Config Array 
- * Static and General configuration for the integration
- * Constant Parameters.
- */
 
 return [
 
 
-	// 						DO NOT FORGET TO "php artisan config:cach" AFTER CHANGING
 
 
 	/**
@@ -19,9 +13,7 @@ return [
 	 */	
 	'ENV' => 'TEST',
 
-
-
-	/**  					Client Information
+	/** Client Information
 	 *	Test Credentials
 	 * 	I recommend to take your own test account from aramex support or something, because those accounts 
 	 *  are not stable, Sometimes the request returns an error not defined in there documentation so it will
@@ -36,6 +28,15 @@ return [
 	// 	'AccountCountryCode'	=> 'GB',
 	// 	'Version'			 	=> 'v1'
 	// ],
+	// 'TEST' => [
+	// 	'AccountCountryCode'	=> 'JO',
+	// 	'AccountEntity'		 	=> 'AMM',
+	// 	'AccountNumber'		 	=> '20016',
+	// 	'AccountPin'		 	=> '221321',
+	// 	'UserName'			 	=> 'reem@reem.com',
+	// 	'Password'			 	=> '123456789',
+	// 	'Version'			 	=> '1.0'
+	// ],
 	'TEST' => [
 		'AccountNumber'		 	=> '20016',
 		'UserName'			 	=> 'testingapi@aramex.com',
@@ -46,7 +47,8 @@ return [
 		'Version'			 	=> 'v1'
 	],
 
-	/**  					Client Information
+
+	/** Client Information
 	 *	Live Credentials
 	 */
 	'LIVE' => [
@@ -59,9 +61,9 @@ return [
 		'Version'			 	=> ''
 	],
 
-	'CompanyName' => 'Moustafa Allahham',
+	'CompanyName' => 'maree company',
 
-	/**						Business Attributes
+	/**Business Attributes
 	 *  Usually there are attributes that never change in the projects (specially
 	 *  for external integration) depending on business models.
 	 *  for example: i dont allow COD (Cash on Delivery) on my e-commerce website

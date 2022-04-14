@@ -22,8 +22,6 @@ class AramexHelper
     */
     public static function extractConsigneeObject($param = []){
 
-        //      Validation
-
         // Validate First
         Validator::validateAddressObject($param);
 
@@ -53,16 +51,10 @@ class AramexHelper
 
     public static function extractPickupAddressContact($param =[])
     {
-
-        //      Validation
-
         // Validate First
-
         Validator::validateAddressObject($param);
-
         // Create the Objcect
         $pickupAddress = new \stdClass;
-
         // Start extracting
         $pickupAddress->PersonName = $param['name']; 
         $pickupAddress->EmailAddress = $param['email'];
@@ -83,12 +75,10 @@ class AramexHelper
 
     public static function extractPickupDetails($param)
     {
-        //      Validation
         // Validate First
         Validator::validatePickupDetails($param);
 
         // Create the Object 
-
         $pickupDetails = new \stdClass;
 
         // Start extracting
@@ -117,7 +107,6 @@ class AramexHelper
     public static function extractShipperAddressContact($param = [] )
     {
         // Validation 
-
         Validator::validateAddressObject($param['shipper']);
 
         $addresDetails = new \stdClass;
@@ -142,7 +131,6 @@ class AramexHelper
     public static function extractConsigneeAddressContact($param = [] )
     {
         // Validation 
-
         Validator::validateAddressObject($param['consignee']);
 
         $addresDetails = new \stdClass;
@@ -166,7 +154,6 @@ class AramexHelper
 
     public static function extractShipmentDetails($param = []){
         // Validation 
-
         Validator::validateShipmentDetails($param);
 
         $shipmentDetails = new \stdClass;
@@ -216,22 +203,21 @@ class AramexHelper
         Validator::validateCalculateRateAddress($param);
 
         $address = new \stdClass;
-        
-        $address->Line1 = $param['line1'];
-        $address->Line2 = $param['line2'] ?? '';
-        $address->Line3 = $param['line3'] ?? '';
-        $address->City = $param['city'] ;
+        $address->Line1          = $param['line1'];
+        $address->Line2          = $param['line2'] ?? '';
+        $address->Line3          = $param['line3'] ?? '';
+        $address->City           = $param['city'] ;
         $address->StateOrProvinceCode = $param['state_code'] ?? '' ;
-        $address->PostCode = $param['postal_code'] ?? '';
-        $address->CountryCode = $param['country_code'];
-        $address->Longitude = $param['longitude'] ?? 0;
-        $address->Latitude = $param['latitude'] ?? 0;
+        $address->PostCode       = $param['postal_code'] ?? '';
+        $address->CountryCode    = $param['country_code'];
+        $address->Longitude      = $param['longitude'] ?? 0;
+        $address->Latitude       = $param['latitude'] ?? 0;
         $address->BuildingNumber = $param['building_number'] ?? null;
-        $address->BuildingName = $param['building_name'] ?? null;
-        $address->Floor = $param['floor'] ?? null;
-        $address->Apartment = $param['apartment'] ?? null;
-        $address->POBox = $param['po_box'] ?? null;
-        $address->Description = $param['description'] ?? null;
+        $address->BuildingName   = $param['building_name'] ?? null;
+        $address->Floor          = $param['floor'] ?? null;
+        $address->Apartment      = $param['apartment'] ?? null;
+        $address->POBox          = $param['po_box'] ?? null;
+        $address->Description    = $param['description'] ?? null;
 
         return $address;
     }

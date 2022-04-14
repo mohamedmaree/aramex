@@ -4,11 +4,6 @@ namespace maree\aramex;
 
 use maree\aramex\Core;
 use maree\aramex\Helpers\AramexHelper;
-use SoapClient;
-
-/**
-* The Package Interface that will be used in App\Http\ 
-*/
 class Aramex
 {
 
@@ -75,16 +70,13 @@ class Aramex
         
         // Import SoapCLient object from Aramex's endpoint. 
         $soapClient = AramexHelper::getSoapClient(AramexHelper::SHIPPING);
-
-
         $aramex->initializePickupCancelation($pickupGuid , $commnet);
-
         $call = $soapClient->CancelPickup($aramex->getParam());
-        
+
         $ret = new \stdClass;
 
         if ($call->HasErrors){
-            $ret->error = 1;
+            $ret->error  = 1;
             $ret->errors = $call->Notifications['Notification'];
         }
         else {
@@ -105,95 +97,75 @@ class Aramex
         $aramex = new Core;
         // Import SoapCLient object from Aramex's endpoint. 
 
-        $soapClient = AramexHelper::getSoapClient(AramexHelper::SHIPPING);
+        $soapClient       = AramexHelper::getSoapClient(AramexHelper::SHIPPING);
 
-        $shipperAddress = AramexHelper::extractShipperAddressContact($param);
+        $shipperAddress   = AramexHelper::extractShipperAddressContact($param);
         $consigneeAddress = AramexHelper::extractConsigneeAddressContact($param);
 
-        $shipmentDetails = AramexHelper::extractShipmentDetails($param);
-
+        $shipmentDetails  = AramexHelper::extractShipmentDetails($param);
+      
         $aramex->initializeShipment($shipperAddress, $consigneeAddress, $shipmentDetails);
 
         $call =  $soapClient->CreateShipments($aramex->getParam());
-       
-        $ret = new \stdClass;
+        $ret  = new \stdClass;
 
         if ($call->HasErrors) {
             $ret->error = 1;
-            if (isset($call->Notifications->Notification))
-            {
+            if (isset($call->Notifications->Notification)){
                 $ret->errors = [$call->Notifications->Notification];
             }
 
-            if (is_object($call->Shipments->ProcessedShipment->Notifications->Notification))
-            {
+            if (is_object($call->Shipments->ProcessedShipment->Notifications->Notification)){
                 $ret->errors = [ $call->Shipments->ProcessedShipment->Notifications->Notification ];
-            }
-            else {
+            }else{
                 $ret->errors = $call->Shipments->ProcessedShipment->Notifications->Notification;
             }
         }
         else{
             $ret = $call;
         }
-
         return $ret;
     }
 
 
 
-    public static function calculateRate($origin , $destination , $shipmentDetails , $currency)
-    {
-
+    public static function calculateRate($origin , $destination , $shipmentDetails , $currency){
         $aramex = new Core;
-
-        $soapClient = AramexHelper::getSoapClient(AramexHelper::RATE);
-
-
+        $soapClient         = AramexHelper::getSoapClient(AramexHelper::RATE);
+        
         $destinationAddress = AramexHelper::extractAddress($destination);
-
-        $originAddress = AramexHelper::extractAddress($origin);
+        $originAddress      = AramexHelper::extractAddress($origin);
 
         $details = AramexHelper::extractCalculateRateShipmentDetails($shipmentDetails);
-
         $aramex->initializeCalculateRate($originAddress, $destinationAddress, $details , $currency);
 
         $call =  $soapClient->calculateRate($aramex->getParam());
 
         $ret = new \stdClass;
-
         if ($call->HasErrors) {
-            $ret->error = 1;
+            $ret->error  = 1;
             $ret->errors = $call->Notifications;
-        }
-        else{
+        }else{
             $ret = $call;
         }
-
         return $ret;
-
     }
 
 
-    public static function trackShipments($param)
-    {
-        if (!is_array($param))
-        {
+    public static function trackShipments($param){
+        if (!is_array($param)){
             throw new \Exception("trackShipments Parameter Should Be an Array includes Strings", 1);
         }
 
         foreach ($param as $shipmentId) {
-            if (!is_string($shipmentId))
-            {
+            if (!is_string($shipmentId)){
                 throw new \Exception("trackShipments Parameter Should Be an Array includes Strings", 1);
             }
         }
 
         $soapClient = AramexHelper::getSoapClient(AramexHelper::TRACKING);
 
-
         $aramex = new Core;
-
         $aramex->initializeShipmentTracking($param);
 
         $call = $soapClient->TrackShipments($aramex->getParam());
@@ -203,69 +175,51 @@ class Aramex
         if ($call->HasErrors) {
             $ret->error = 1;
             $ret->errors = $call->Notifications;
-        }
-        else{
+        }else{
             $ret = $call;
         }
-
         return $ret;
     }
 
 
-    public static function fetchCountries($code = null)
-    {
+    public static function fetchCountries($code = null){
 
         $soapClient = AramexHelper::getSoapClient(AramexHelper::LOCATION);
-        
         $aramex = new Core;
-
         $aramex->initializeFetchCountries($code);
-
         if (isset($code))
             $call = $soapClient->FetchCountry($aramex->getParam());
         else 
             $call = $soapClient->FetchCountries($aramex->getParam());
 
         $ret = new \stdClass;
-
         if ($call->HasErrors) {
             $ret->error = 1;
             $ret->errors = $call->Notification;                
-        }
-        else{
+        }else{
             $ret = $call;
         }
-
         return $ret;
     }
 
-    public static function fetchCities($code, $nameStartWith = null)
-    {
+    public static function fetchCities($code, $nameStartWith = null){
         $soapClient = AramexHelper::getSoapClient(AramexHelper::LOCATION);
-
         $aramex = new Core;
-
         $aramex->initializeFetchCities($code, $nameStartWith);
-
         $call = $soapClient->FetchCities($aramex->getParam());
         
         $ret = new \stdClass;
-
         if ($call->HasErrors) {
             $ret->error = 1;
             $ret->errors = $call->Notifications;
-        }
-        else{
+        }else{
             $ret = $call;
         }
-
         return $ret;
     } 
 
-    public static function validateAddress($address)
-    {
+    public static function validateAddress($address){
         $address = AramexHelper::extractAddress($address);
-
 
         $soapClient = AramexHelper::getSoapClient(AramexHelper::LOCATION);
 
