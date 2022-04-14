@@ -14,7 +14,7 @@ php artisan vendor:publish --provider="maree\aramex\AramexServiceProvider" --tag
 then change your aramex config from config/aramex.php file
 ```php
 
-    'ENV' => 'TEST', //test|live
+    'ENV'  => 'TEST', //TEST|LIVE
 	'TEST' => [
 		'AccountNumber'		 	=> '11111',
 		'UserName'			 	=> 'maree@aramex.com',
@@ -28,7 +28,7 @@ then change your aramex config from config/aramex.php file
 ## Usage
 
 
-## for Create Pickup 
+## Create Pickup 
 ```php
 use maree\aramex\Aramex;
     $data = Aramex::createPickup([
