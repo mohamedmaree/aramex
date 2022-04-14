@@ -64,7 +64,7 @@ use maree\aramex\Aramex;
     $response = Aramex::cancelPickup($guid,$cancel_reason = '');
 ```
 
-## for Create Shipment 
+## Create Shipment 
 ```php
 use maree\aramex\Aramex;
 
