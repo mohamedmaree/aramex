@@ -246,7 +246,7 @@ use maree\aramex\Aramex;
 ```
 
 - Note that this package require SOAP extension on your server
-- Use live data because test data often does not work
+- Use live account data because test data often does not work
 - You can get doucmentation link: https://www.aramex.com/docs/default-source/resourses/resourcesdata/shipping-services-api-manual.pdf
 - download aramex api src code from https://www.aramex.com/be/en/solutions-services/developers-solutions-center/apis
 - Package is build on package https://github.com/Moustafa22/Laravel-Aramex-SDK
